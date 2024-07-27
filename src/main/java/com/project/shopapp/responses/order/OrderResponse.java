@@ -1,6 +1,6 @@
 package com.project.shopapp.responses.order;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.project.shopapp.models.Order;
+import com.project.shopapp.models.Progress;
 import com.project.shopapp.models.ProgressDetail;
 import lombok.*;
 
@@ -58,7 +58,7 @@ public class OrderResponse {
     @JsonProperty("order_details")
     private List<ProgressDetail> orderDetails;
 
-    public static OrderResponse fromOrder(Order order) {
+    public static OrderResponse fromOrder(Progress order) {
         OrderResponse orderResponse =  OrderResponse
                 .builder()
                 .id(order.getId())

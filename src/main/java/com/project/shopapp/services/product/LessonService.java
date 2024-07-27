@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService implements IProductService{
-    private final ProductRepository productRepository;
+public class LessonService implements ILessonService {
+    private final LessonRepository productRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final ProductImageRepository productImageRepository;
@@ -125,7 +125,7 @@ public class ProductService implements IProductService{
     }
     @Override
     @Transactional
-    public ProductImage createProductImage(
+    public LessonMedia createProductImage(
             Long productId,
             ProductImageDTO productImageDTO) throws Exception {
         Lesson existingProduct = productRepository
@@ -133,16 +133,16 @@ public class ProductService implements IProductService{
                 .orElseThrow(() ->
                         new DataNotFoundException(
                                 "Cannot find product with id: "+productImageDTO.getProductId()));
-        ProductImage newProductImage = ProductImage.builder()
+        LessonMedia newProductImage = LessonMedia.builder()
                 .product(existingProduct)
                 .imageUrl(productImageDTO.getImageUrl())
                 .build();
         //Ko cho insert quá 5 ảnh cho 1 sản phẩm
         int size = productImageRepository.findByProductId(productId).size();
-        if(size >= ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+        if(size >= LessonMedia.MAXIMUM_IMAGES_PER_PRODUCT) {
             throw new InvalidParamException(
                     "Number of images must be <= "
-                    +ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);
+                    + LessonMedia.MAXIMUM_IMAGES_PER_PRODUCT);
         }
         if (existingProduct.getThumbnail() == null ) {
             existingProduct.setThumbnail(newProductImage.getImageUrl());

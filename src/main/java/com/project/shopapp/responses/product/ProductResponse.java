@@ -2,7 +2,7 @@ package com.project.shopapp.responses.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.project.shopapp.models.Lesson;
-import com.project.shopapp.models.ProductImage;
+import com.project.shopapp.models.LessonMedia;
 import com.project.shopapp.responses.BaseResponse;
 import lombok.*;
 
@@ -24,7 +24,7 @@ public class ProductResponse extends BaseResponse {
     private int totalPages;
 
     @JsonProperty("product_images")
-    private List<ProductImage> productImages = new ArrayList<>();
+    private List<LessonMedia> productImages = new ArrayList<>();
 
     @JsonProperty("category_id")
     private Long categoryId;

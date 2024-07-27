@@ -5,7 +5,7 @@ import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.*;
 import com.project.shopapp.models.Comment;
 import com.project.shopapp.repositories.CommentRepository;
-import com.project.shopapp.repositories.ProductRepository;
+import com.project.shopapp.repositories.LessonRepository;
 import com.project.shopapp.repositories.UserRepository;
 import com.project.shopapp.responses.comment.CommentResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class CommentService implements ICommentService{
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
-    private final ProductRepository productRepository;
+    private final LessonRepository productRepository;
     @Override
     @Transactional
     public Comment insertComment(CommentDTO commentDTO) {

@@ -19,7 +19,7 @@ public class ProgressDetail {
     @ManyToOne
     @JoinColumn(name = "progress_id")
     @JsonBackReference
-    private Order order;
+    private Progress order;
 
     @ManyToOne
     @JoinColumn(name = "lesson_id")

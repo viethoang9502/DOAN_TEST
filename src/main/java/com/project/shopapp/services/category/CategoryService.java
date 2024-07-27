@@ -4,7 +4,7 @@ import com.project.shopapp.dtos.CategoryDTO;
 import com.project.shopapp.models.Category;
 import com.project.shopapp.models.Lesson;
 import com.project.shopapp.repositories.CategoryRepository;
-import com.project.shopapp.repositories.ProductRepository;
+import com.project.shopapp.repositories.LessonRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService implements ICategoryService {
     private final CategoryRepository categoryRepository;
-    private final ProductRepository productRepository;
+    private final LessonRepository productRepository;
     @Override
     @Transactional
     public Category createCategory(CategoryDTO categoryDTO) {

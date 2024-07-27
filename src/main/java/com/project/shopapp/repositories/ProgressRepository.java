@@ -1,6 +1,6 @@
 package com.project.shopapp.repositories;
 
-import com.project.shopapp.models.Order;
+import com.project.shopapp.models.Progress;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,17 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface ProgressRepository extends JpaRepository<Progress, Long> {
     //Tìm các đơn hàng của 1 user nào đó
-    List<Order> findByUserId(Long userId);
-    @Query("SELECT o FROM Order o WHERE o.active = true AND (:keyword IS NULL OR :keyword = '' OR " +
+    List<Progress> findByUserId(Long userId);
+    @Query("SELECT o FROM Progress o WHERE o.active = true AND (:keyword IS NULL OR :keyword = '' OR " +
             "o.fullName LIKE %:keyword% " +
             "OR o.address LIKE %:keyword% " +
             "OR o.note LIKE %:keyword% " +
             "OR o.email LIKE %:keyword%)")
-    Page<Order> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
+    Page<Progress> findByKeyword(@Param("keyword") String keyword, Pageable pageable);
 }
 /*
 INSERT INTO orders (user_id, fullname, email, phone_number, address, note, status, total_money)

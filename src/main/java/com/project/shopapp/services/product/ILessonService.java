@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-public interface IProductService {
+public interface ILessonService {
     Lesson createProduct(ProductDTO productDTO) throws Exception;
     Lesson getProductById(long id) throws Exception;
     public Page<ProductResponse> getAllProducts(String keyword,
@@ -18,7 +18,7 @@ public interface IProductService {
     Lesson updateProduct(long id, ProductDTO productDTO) throws Exception;
     void deleteProduct(long id);
     boolean existsByName(String name);
-    ProductImage createProductImage(
+    LessonMedia createProductImage(
             Long productId,
             ProductImageDTO productImageDTO) throws Exception;
 

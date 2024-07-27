@@ -1,6 +1,6 @@
 package com.project.shopapp.models;
 
-public class OrderStatus {
+public class ProgressStatus {
     public static final String PENDING = "pending";
     public static final String PROCESSING = "processing";
     public static final String SHIPPED = "shipped";

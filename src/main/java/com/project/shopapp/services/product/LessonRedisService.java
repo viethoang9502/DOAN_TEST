@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductRedisService implements IProductRedisService{
+public class LessonRedisService implements ILessonRedisService {
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper redisObjectMapper;
     @Value("${spring.data.redis.use-redis-cache}")

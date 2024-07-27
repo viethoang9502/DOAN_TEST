@@ -1,4 +1,4 @@
-package com.project.shopapp.services.orders;
+package com.project.shopapp.services.progresses;
 
 import com.project.shopapp.dtos.CartItemDTO;
 import com.project.shopapp.dtos.OrderDTO;
@@ -19,18 +19,18 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService implements IOrderService{
+public class ProgressService implements IProgressService {
     private final UserRepository userRepository;
-    private final OrderRepository orderRepository;
-    private final ProductRepository productRepository;
+    private final ProgressRepository orderRepository;
+    private final LessonRepository productRepository;
     private final CouponRepository couponRepository;
-    private final OrderDetailRepository orderDetailRepository;
+    private final ProgressDetailRepository orderDetailRepository;
 
     private final ModelMapper modelMapper;
 
     @Override
     @Transactional
-    public Order createOrder(OrderDTO orderDTO) throws Exception {
+    public Progress createOrder(OrderDTO orderDTO) throws Exception {
         //tìm xem user'id có tồn tại ko
         User user = userRepository
                 .findById(orderDTO.getUserId())
@@ -38,14 +38,14 @@ public class OrderService implements IOrderService{
         //convert orderDTO => Order
         //dùng thư viện Model Mapper
         // Tạo một luồng bảng ánh xạ riêng để kiểm soát việc ánh xạ
-        modelMapper.typeMap(OrderDTO.class, Order.class)
-                .addMappings(mapper -> mapper.skip(Order::setId));
+        modelMapper.typeMap(OrderDTO.class, Progress.class)
+                .addMappings(mapper -> mapper.skip(Progress::setId));
         // Cập nhật các trường của đơn hàng từ orderDTO
-        Order order = new Order();
+        Progress order = new Progress();
         modelMapper.map(orderDTO, order);
         order.setUser(user);
         order.setOrderDate(LocalDate.now());//lấy thời điểm hiện tại
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(ProgressStatus.PENDING);
         //Kiểm tra shipping date phải >= ngày hôm nay
         LocalDate shippingDate = orderDTO.getShippingDate() == null
                 ? LocalDate.now() : orderDTO.getShippingDate();
@@ -101,12 +101,12 @@ public class OrderService implements IOrderService{
         return order;
     }
     @Transactional
-    public Order updateOrderWithDetails(OrderWithDetailsDTO orderWithDetailsDTO) {
-        modelMapper.typeMap(OrderWithDetailsDTO.class, Order.class)
-                .addMappings(mapper -> mapper.skip(Order::setId));
-        Order order = new Order();
+    public Progress updateOrderWithDetails(OrderWithDetailsDTO orderWithDetailsDTO) {
+        modelMapper.typeMap(OrderWithDetailsDTO.class, Progress.class)
+                .addMappings(mapper -> mapper.skip(Progress::setId));
+        Progress order = new Progress();
         modelMapper.map(orderWithDetailsDTO, order);
-        Order savedOrder = orderRepository.save(order);
+        Progress savedOrder = orderRepository.save(order);
 
         // Set the order for each order detail
         for (OrderDetailDTO orderDetailDTO : orderWithDetailsDTO.getOrderDetailDTOS()) {
@@ -122,23 +122,23 @@ public class OrderService implements IOrderService{
         return savedOrder;
     }
     @Override
-    public Order getOrder(Long id) {
-        Order selectedOrder = orderRepository.findById(id).orElse(null);
+    public Progress getOrder(Long id) {
+        Progress selectedOrder = orderRepository.findById(id).orElse(null);
         return selectedOrder;
     }
 
     @Override
     @Transactional
-    public Order updateOrder(Long id, OrderDTO orderDTO)
+    public Progress updateOrder(Long id, OrderDTO orderDTO)
             throws DataNotFoundException {
-        Order order = orderRepository.findById(id).orElseThrow(() ->
+        Progress order = orderRepository.findById(id).orElseThrow(() ->
                 new DataNotFoundException("Cannot find order with id: " + id));
         User existingUser = userRepository.findById(
                 orderDTO.getUserId()).orElseThrow(() ->
                 new DataNotFoundException("Cannot find user with id: " + id));
         // Tạo một luồng bảng ánh xạ riêng để kiểm soát việc ánh xạ
-        modelMapper.typeMap(OrderDTO.class, Order.class)
-                .addMappings(mapper -> mapper.skip(Order::setId));
+        modelMapper.typeMap(OrderDTO.class, Progress.class)
+                .addMappings(mapper -> mapper.skip(Progress::setId));
         // Cập nhật các trường của đơn hàng từ orderDTO
         modelMapper.map(orderDTO, order);
         order.setUser(existingUser);
@@ -148,7 +148,7 @@ public class OrderService implements IOrderService{
     @Override
     @Transactional
     public void deleteOrder(Long id) {
-        Order order = orderRepository.findById(id).orElse(null);
+        Progress order = orderRepository.findById(id).orElse(null);
         //no hard-delete, => please soft-delete
         if(order != null) {
             order.setActive(false);
@@ -156,12 +156,12 @@ public class OrderService implements IOrderService{
         }
     }
     @Override
-    public List<Order> findByUserId(Long userId) {
+    public List<Progress> findByUserId(Long userId) {
         return orderRepository.findByUserId(userId);
     }
 
     @Override
-    public Page<Order> getOrdersByKeyword(String keyword, Pageable pageable) {
+    public Page<Progress> getOrdersByKeyword(String keyword, Pageable pageable) {
         return orderRepository.findByKeyword(keyword, pageable);
     }
 }

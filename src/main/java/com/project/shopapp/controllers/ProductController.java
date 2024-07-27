@@ -6,13 +6,13 @@ import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.components.SecurityUtils;
 import com.project.shopapp.dtos.*;
 import com.project.shopapp.models.Lesson;
-import com.project.shopapp.models.ProductImage;
+import com.project.shopapp.models.LessonMedia;
 import com.project.shopapp.models.User;
 import com.project.shopapp.responses.ResponseObject;
 import com.project.shopapp.responses.product.ProductListResponse;
 import com.project.shopapp.responses.product.ProductResponse;
-import com.project.shopapp.services.product.IProductRedisService;
-import com.project.shopapp.services.product.IProductService;
+import com.project.shopapp.services.product.ILessonRedisService;
+import com.project.shopapp.services.product.ILessonService;
 import com.project.shopapp.utils.MessageKeys;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -42,9 +42,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-    private final IProductService productService;
+    private final ILessonService productService;
     private final LocalizationUtils localizationUtils;
-    private final IProductRedisService productRedisService;
+    private final ILessonRedisService productRedisService;
     private final SecurityUtils securityUtils;
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -84,7 +84,7 @@ public class ProductController {
     ) throws Exception {
         Lesson existingProduct = productService.getProductById(productId);
         files = files == null ? new ArrayList<MultipartFile>() : files;
-        if(files.size() > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+        if(files.size() > LessonMedia.MAXIMUM_IMAGES_PER_PRODUCT) {
             return ResponseEntity.badRequest().body(
                     ResponseObject.builder()
                             .message(localizationUtils
@@ -92,7 +92,7 @@ public class ProductController {
                             .build()
             );
         }
-        List<ProductImage> productImages = new ArrayList<>();
+        List<LessonMedia> productImages = new ArrayList<>();
         for (MultipartFile file : files) {
             if(file.getSize() == 0) {
                 continue;
@@ -118,7 +118,7 @@ public class ProductController {
             // Lưu file và cập nhật thumbnail trong DTO
             String filename = productService.storeFile(file); // Thay thế hàm này với code của bạn để lưu file
             //lưu vào đối tượng product trong DB
-            ProductImage productImage = productService.createProductImage(
+            LessonMedia productImage = productService.createProductImage(
                     existingProduct.getId(),
                     ProductImageDTO.builder()
                             .imageUrl(filename)

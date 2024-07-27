@@ -4,7 +4,6 @@ import com.project.shopapp.dtos.UpdateUserDTO;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.exceptions.InvalidPasswordException;
-import com.project.shopapp.models.Order;
 import com.project.shopapp.models.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

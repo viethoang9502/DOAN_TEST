@@ -6,7 +6,7 @@ import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.ProgressDetail;
 import com.project.shopapp.responses.ResponseObject;
 import com.project.shopapp.responses.order.OrderDetailResponse;
-import com.project.shopapp.services.orderdetails.OrderDetailService;
+import com.project.shopapp.services.progressdetails.ProgressDetailService;
 import com.project.shopapp.utils.MessageKeys;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("${api.prefix}/order_details")
 @RequiredArgsConstructor
 public class OrderDetailController {
-    private final OrderDetailService orderDetailService;
+    private final ProgressDetailService orderDetailService;
     private final LocalizationUtils localizationUtils;
     //Thêm mới 1 order detail
     @PostMapping("")

@@ -1,7 +1,7 @@
 package com.project.shopapp.services.product.image;
 
 import com.project.shopapp.exceptions.DataNotFoundException;
-import com.project.shopapp.models.ProductImage;
+import com.project.shopapp.models.LessonMedia;
 import com.project.shopapp.repositories.ProductImageRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +11,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductImageService implements IProductImageService{
+public class LessonImageService implements ILessonImageService{
     private final ProductImageRepository productImageRepository;
     @Override
     @Transactional
-    public ProductImage deleteProductImage(Long id) throws Exception {
-        Optional<ProductImage> productImage = productImageRepository.findById(id);
+    public LessonMedia deleteProductImage(Long id) throws Exception {
+        Optional<LessonMedia> productImage = productImageRepository.findById(id);
         if(productImage.isEmpty()) {
             throw new DataNotFoundException(
                     String.format("Cannot find product image with id: %ld", id)

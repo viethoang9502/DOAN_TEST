@@ -2,16 +2,13 @@ package com.project.shopapp.controllers;
 
 import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.*;
-import com.project.shopapp.models.Order;
+import com.project.shopapp.models.Progress;
 import com.project.shopapp.responses.ResponseObject;
-import com.project.shopapp.responses.order.OrderListResponse;
 import com.project.shopapp.responses.order.OrderResponse;
-import com.project.shopapp.services.orders.IOrderService;
+import com.project.shopapp.services.progresses.IProgressService;
 import com.project.shopapp.utils.MessageKeys;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,7 +24,7 @@ import java.util.List;
 @RequestMapping("${api.prefix}/orders")
 @RequiredArgsConstructor
 public class OrderController {
-    private final IOrderService orderService;
+    private final IProgressService orderService;
     private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
@@ -47,7 +44,7 @@ public class OrderController {
                             .status(HttpStatus.BAD_REQUEST)
                             .build());
         }
-        Order orderResponse = orderService.createOrder(orderDTO);
+        Progress orderResponse = orderService.createOrder(orderDTO);
         return ResponseEntity.ok(ResponseObject.builder()
                         .message("Insert order successfully")
                         .data(orderResponse)
@@ -57,7 +54,7 @@ public class OrderController {
     @GetMapping("/user/{user_id}") // Thêm biến đường dẫn "user_id"
     //GET http://localhost:8088/api/v1/orders/user/4
     public ResponseEntity<ResponseObject> getOrders(@Valid @PathVariable("user_id") Long userId) {
-        List<Order> orders = orderService.findByUserId(userId);
+        List<Progress> orders = orderService.findByUserId(userId);
         return ResponseEntity.ok(ResponseObject
                         .builder()
                         .message("Get list of orders successfully")
@@ -68,7 +65,7 @@ public class OrderController {
     //GET http://localhost:8088/api/v1/orders/2
     @GetMapping("/{id}")
     public ResponseEntity<ResponseObject> getOrder(@Valid @PathVariable("id") Long orderId) {
-        Order existingOrder = orderService.getOrder(orderId);
+        Progress existingOrder = orderService.getOrder(orderId);
         OrderResponse orderResponse = OrderResponse.fromOrder(existingOrder);
         return ResponseEntity.ok(new ResponseObject(
                 "Get order successfully",
@@ -84,7 +81,7 @@ public class OrderController {
             @Valid @PathVariable long id,
             @Valid @RequestBody OrderDTO orderDTO) throws Exception {
 
-        Order order = orderService.updateOrder(id, orderDTO);
+        Progress order = orderService.updateOrder(id, orderDTO);
         return ResponseEntity.ok(new ResponseObject("Update order successfully", HttpStatus.OK, order));
     }
     @DeleteMapping("/{id}")

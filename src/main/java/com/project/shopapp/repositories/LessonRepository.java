@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Lesson, Long> {
+public interface LessonRepository extends JpaRepository<Lesson, Long> {
     boolean existsByName(String name);
     Page<Lesson> findAll(Pageable pageable);//phân trang
     List<Lesson> findByCategory(Category category);

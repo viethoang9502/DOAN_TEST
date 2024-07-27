@@ -9,13 +9,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "progress")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Order {
+public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +24,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "fullname", length = 100)
+    @Column(name = "lesson_name", length = 100)
     private String fullName;
 
     @Column(name = "email", length = 100)
@@ -36,31 +36,31 @@ public class Order {
     @Column(name = "address", length = 100)
     private String address;
 
-    @Column(name = "note", length = 100)
+    @Column(name = "email_reminder", length = 100)
     private String note;
 
-    @Column(name="order_date")
+    @Column(name="date_started")
     private LocalDate orderDate;
 
     @Column(name = "status")
     private String status;
 
-    @Column(name = "total_money")
+    @Column(name = "progress")
     private Float totalMoney;
 
-    @Column(name = "shipping_method")
+    @Column(name = "study_method")
     private String shippingMethod;
 
-    @Column(name = "shipping_address")
+    @Column(name = "study_address")
     private String shippingAddress;
 
-    @Column(name = "shipping_date")
+    @Column(name = "reminder_date")
     private LocalDate shippingDate;
 
     @Column(name = "tracking_number")
     private String trackingNumber;
 
-    @Column(name = "payment_method")
+    @Column(name = "learning_method")
     private String paymentMethod;
 
     @Column(name = "active")

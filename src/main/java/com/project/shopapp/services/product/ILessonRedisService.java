@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
-public interface IProductRedisService {
+public interface ILessonRedisService {
     //Clear cached data in Redis
     void clear();//clear cache
     List<ProductResponse> getAllProducts(
